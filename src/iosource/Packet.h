@@ -264,7 +264,7 @@ public:
 	 * GRE link type. It is used to pass this information from the GRE
 	 * analyzer to the IPTunnel analyzer.
 	 */
-	int gre_link_type = DLT_RAW;
+	int gre_link_type = 12;
 
 	/**
 	 * This flag indicates whether a packet has been processed. This can

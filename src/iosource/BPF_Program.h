@@ -90,7 +90,7 @@ protected:
 	// in the implementation whether it's a global or not. --ck)
 	bool m_compiled = false;
 	bool m_matches_anything = false;
-	struct bpf_program m_program;
+	//struct bpf_program m_program;
 
 	FilterState state = FilterState::OK;
 	std::string state_message;

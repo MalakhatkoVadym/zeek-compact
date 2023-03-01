@@ -76,7 +76,7 @@ static bool filter_matches_anything(const char* filter)
 	return (! filter) || strlen(filter) == 0 || strcmp(filter, "ip or not ip") == 0;
 	}
 
-BPF_Program::BPF_Program() : m_program() { }
+BPF_Program::BPF_Program() /*: m_program()*/ { }
 
 BPF_Program::~BPF_Program()
 	{
@@ -90,12 +90,12 @@ bool BPF_Program::Compile(pcap_t* pcap, const char* filter, uint32_t netmask, bo
 
 	FreeCode();
 
-	if ( pcap_compile(pcap, &m_program, (char*)filter, optimize, netmask) < 0 )
-		{
-		state_message = std::string(pcap_geterr(pcap));
-		state = GetStateFromMessage(state_message);
-		return false;
-		}
+	// if ( pcap_compile(pcap,/* &m_program,*/ (char*)filter, optimize, netmask) < 0 )
+	// 	{
+	// 	state_message = std::string(pcap_geterr(pcap));
+	// 	state = GetStateFromMessage(state_message);
+	// 	return false;
+	// 	}
 
 	m_compiled = true;
 	m_matches_anything = filter_matches_anything(filter);
@@ -135,7 +135,7 @@ bool BPF_Program::Compile(zeek_uint_t snaplen, int linktype, const char* filter,
 
 bpf_program* BPF_Program::GetProgram()
 	{
-	return m_compiled ? &m_program : nullptr;
+	return /*m_compiled ? &m_program :*/ nullptr;
 	}
 
 void BPF_Program::FreeCode()
@@ -143,9 +143,9 @@ void BPF_Program::FreeCode()
 	if ( m_compiled )
 		{
 #ifdef DONT_HAVE_LIBPCAP_PCAP_FREECODE
-		pcap_freecode(NULL, &m_program);
+		//pcap_freecode(NULL, &m_program);
 #else
-		pcap_freecode(&m_program);
+		//pcap_freecode(&m_program);
 #endif
 		m_compiled = false;
 		}
